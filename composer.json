@@ -1,0 +1,25 @@
+{
+    "name": "dresing/open-rank",
+    "description": "An unofficial SDK for the OpenRank API",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "authors": [
+        {
+            "name": "Andreas Olesen",
+            "email": "ao@copus.dk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Dresing\\OpenRank\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dresing\\OpenRank\\OpenRankServiceProvider"
+            ]
+        }
+    }
+}
