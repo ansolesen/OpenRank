@@ -1,18 +1,13 @@
-# OpenRank for Laravel
-A tidy package for Laravel that can consumes the free [OpenRank API](http://openrank.io).
+# Open Page Rank for Laravel
+A tidy package for Laravel that can consumes the free [Open Page Rank API](https://www.domcop.com/openpagerank/).
 
-  - Type some Markdown on the left
-  - See HTML in the right
-  - Magic
-
-
-
+  - Fetch ranking information for a single or multiple domains
+  - Very simple cache integration
 
 ### Todos
 
  - Write Tests
  - Clean up caching mechanism
-
 
 License
 ----

@@ -5,12 +5,11 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
 /**
- * Interacts with the OpenRank API
+ * Interacts with the Open Page Rank API
  */
 class OpenRank
 {
     public $client;
-    public $crawler;
     private $apiKey;
     private $minutesToCacheFor;
     private $cacheRepository;
@@ -39,16 +38,14 @@ class OpenRank
         $bulk = is_array($domain);
         $domain = $bulk ? $domain : [$domain];
 
-       $out = $this->cacheRepository->remember(implode($domain), $this->minutesToCacheFor, function () use($domain, $bulk) {
-            $response = $this->get('', [
-                'd' => implode('|',$domain)
+       return $this->cacheRepository->remember(implode($domain), $this->minutesToCacheFor, function () use($domain, $bulk) {
+            $response = $this->get('getPageRank', [
+                'domains' => $domain
             ]);
-            $data = collect($this->getData($response))->map(function($site) {
-                return $site->openrank;
-            });
+            $data = collect($this->getData($response));
             return $data->count() == 1 && !$bulk ? $data->first() : $data->toArray();
         });
-       return is_array($out) ? $out : (int) $out;
+
     }
 
     /**
@@ -59,9 +56,11 @@ class OpenRank
      */
     public function get($endpoint, array $query) : Response
     {
-        $query['key'] = $this->apiKey;
         return $this->client->request('GET', $endpoint, [
-            'query' => $query
+            'query' => $query,
+            'headers' => [
+                'API-OPR' => $this->apiKey
+            ]
         ]);
     }
 
@@ -72,6 +71,6 @@ class OpenRank
      */
     private function getData(Response $response)
     {
-        return (array) json_decode($response->getBody()->getContents())->data;
+        return json_decode($response->getBody()->getContents())->response;
     }
 }

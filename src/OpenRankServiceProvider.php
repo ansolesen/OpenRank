@@ -29,7 +29,7 @@ class OpenRankServiceProvider extends ServiceProvider
         );
         $this->app->bind(OpenRank::class, function ($app) {
             return new OpenRank(new Client([
-                'base_uri' => 'https://api.openrank.io/'
+                'base_uri' => 'https://openpagerank.com/api/v1.0/'
             ]), config('open_rank.api_key'), app()->make(config('open_rank.cache.repository')), config('open_rank.cache.minutes'));
         });
     }
